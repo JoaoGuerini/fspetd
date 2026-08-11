@@ -233,8 +233,25 @@
     grid-template-rows: repeat(6, 1fr);
     overflow: hidden;
   }
-  body.slide-mode .block { overflow: hidden; }
   body.slide-mode .credit { display: none; }
+  /* Em tela cheia a altura vira fixa (720px), então o conteúdo dos blocos mais
+     cheios estourava e era cortado. A tipografia encolhe um pouco só no modo
+     slide. Como o slide é sempre 1280x720 e só depois recebe scale(), estes
+     valores em px valem igual em qualquer tamanho de tela. */
+  body.slide-mode .block { overflow: hidden; padding: 8px 12px; }
+  body.slide-mode .block header { margin-bottom: 5px; }
+  body.slide-mode .block header svg.ico { width: 15px; height: 15px; }
+  body.slide-mode .block h2 { font-size: 10.5px; }
+  body.slide-mode .block h2 small { font-size: 8.5px; }
+  body.slide-mode .block li {
+    font-size: 10.2px;
+    line-height: 1.4;
+    margin-bottom: 2px;
+  }
+  body.slide-mode .block li::before { top: 5px; width: 4px; height: 4px; }
+  body.slide-mode .block li.open { padding: 3px 7px 3px 17px; }
+  body.slide-mode .block li.open::before { left: 7px; top: 8px; }
+  body.slide-mode .sub { font-size: 9px; margin: 5px 0 3px; }
   .slide-close {
     position: fixed;
     top: 18px;
@@ -425,7 +442,7 @@
         <h2>Obj SMART</h2>
       </header>
       <ul>
-        <li>Entregar até o fim de 2026/2 a análise completa da plataforma: requisitos, protótipos no Figma e modelagem do banco</li>
+        <li>Entregar até 08/12/2026 a análise completa da plataforma: requisitos, protótipos no Figma e modelagem do banco</li>
         <li class="open">Meta numérica de uso/adoção: a definir com o cliente</li>
       </ul>
     </section>
@@ -484,9 +501,9 @@
       </ul>
       <p class="sub">Concorrentes</p>
       <ul>
-        <li>Nacionais: DogHero (Petlove), PetBacker</li>
-        <li>Locais: hotéis pra pets, creches, veterinárias</li>
-        <li>Informais: grupos de WhatsApp/Facebook</li>
+        <li>Plataformas nacionais: DogHero e PetBacker</li>
+        <li>Locais: hotéis pra pets, creches e veterinárias com hospedagem</li>
+        <li>Informais: grupos de WhatsApp/Facebook e conhecidos (grátis, mas sem avaliação nem respaldo)</li>
       </ul>
     </section>
 
@@ -496,8 +513,11 @@
         <h2>Equipe</h2>
       </header>
       <ul>
-        <li>Liz: requisitos, wireframes e UI/UX no Figma</li>
-        <li class="open">Nomes e papéis dos demais integrantes: a preencher</li>
+        <li>Amara, Erick, João G. e Mariana</li>
+      </ul>
+      <p class="sub">Papéis</p>
+      <ul>
+        <li>Todos atuando na elicitação de requisitos, modelagem de dados e produção de wireframes</li>
       </ul>
     </section>
 
