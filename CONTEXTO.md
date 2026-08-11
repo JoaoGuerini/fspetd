@@ -116,13 +116,15 @@ o martelo nisso, dá para fechar os três de uma vez.
 
 ## Trabalho em aberto
 
-**`roxo.html`** — variante de cores roxo/lilás baseada nos slides da apresentação.
+**[roxo.html](roxo.html)** — variante de cores roxo/lilás baseada nos slides da
+apresentação, publicada em https://fspet.vercel.app/roxo para comparação.
 Folha branca, fundo lavanda `#E9DEF9`, roxo vivo `#7B10E8`, roxo profundo `#4E0B9E`,
 roxo escuro `#26103F`. Nessa variante as variáveis CSS foram renomeadas de `--pink*`
 para `--accent*`, então a paleta inteira troca mexendo só no `:root`.
 
-**Ainda não aprovada.** Se aprovar, aplicar no `index.html` e deployar. Se recusar,
-apagar o arquivo.
+É uma **cópia** do `index.html`, não um tema — as duas versões têm o mesmo conteúdo
+duplicado. Enquanto as duas existirem, **toda edição de conteúdo precisa ser feita nos
+dois arquivos**. Quando a decisão de cor for tomada, mantenha só uma.
 
 Também foi sugerido e não feito: usar nos títulos a fonte condensada e pesada dos
 slides, mantendo Poppins no corpo do texto.
