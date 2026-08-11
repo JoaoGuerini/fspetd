@@ -94,7 +94,7 @@ tipográficas (`" "`) no bloco Obj SMART são intencionais.
   **08/12** Milestone 3 (modelagem do banco) · **15/12** Avaliação da Fábrica.
 - **Custos:** 26 semanas, R$ 800,00/semana por membro → R$ 20.800,00 por colaborador →
   **R$ 83.200,00** no total (4 pessoas). As contas fecham.
-- **Restrições:** sem pagamento no sistema, prazo da disciplina, ferramentas gratuitas.
+- **Restrições:** prazo da disciplina, ferramentas gratuitas.
 
 ### Pendências ainda marcadas em rosa
 
