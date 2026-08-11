@@ -99,11 +99,10 @@ tipográficas (`" "`) no bloco Obj SMART são intencionais.
 ### Pendências ainda marcadas em rosa
 
 1. "Formato em aberto: app nativo ou site responsivo" — bloco **Produto**
-2. "Implantação futura: a definir" — bloco **Custos**
 
-A primeira conversa de perto com o primeiro risco listado ("Indecisão app x site
+Essa pendência conversa de perto com o primeiro risco listado ("Indecisão app x site
 atrasar os protótipos") e com as aspas em "aplicativo" no Obj SMART. Se o grupo bater
-o martelo nisso, dá para fechar os três de uma vez.
+o martelo nisso, dá para fechar os dois de uma vez.
 
 ### Informação conhecida que ainda NÃO está no canvas
 
