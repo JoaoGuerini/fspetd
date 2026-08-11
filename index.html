@@ -196,19 +196,9 @@
     height: 720px;              /* proporção 16:9 fixa */
     max-width: none;
     z-index: 50;
-    transform: translate(-50%, -50%) scale(var(--slide-scale, 1));
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
-    animation: slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  @keyframes slide-in {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -46%) scale(calc(var(--slide-scale, 1) * 0.9));
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(var(--slide-scale, 1));
-    }
+    /* O transform (centralizar + escalar) fica por conta do GSAP, em enterSlide().
+       Se ficasse aqui, o CSS e o GSAP disputariam a mesma propriedade. */
   }
   body.slide-mode .grid {
     grid-template-rows: repeat(6, 1fr);
@@ -274,10 +264,8 @@
     background: rgba(26, 21, 24, 0.35);   /* fundo escurecido, mas ainda visível */
     -webkit-backdrop-filter: blur(7px);
     backdrop-filter: blur(7px);           /* desfoque do que está atrás */
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    opacity: 0;   /* o GSAP assume daqui em diante */
   }
-  .zoom-overlay.show { opacity: 1; }
   .zoom-card {
     position: relative;
     background: var(--paper);
@@ -288,10 +276,9 @@
     overflow: auto;
     padding: 30px 36px;
     box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
-    transform: scale(0.92) translateY(14px);
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Sem transform inicial: o Flip mede a posição natural do card aqui
+       e anima a partir do retângulo do bloco clicado. */
   }
-  .zoom-overlay.show .zoom-card { transform: scale(1) translateY(0); }
   .zoom-card header {
     display: flex;
     align-items: center;
@@ -375,10 +362,13 @@
   }
   .zoom-x:hover { background: var(--pink-bg); color: var(--pink-dark); border-color: var(--pink); }
 
+  /* prefers-reduced-motion agora é tratado no JS (gsap.matchMedia), porque as
+     animações deixaram de ser CSS. Só o que continua em CSS fica aqui. */
   @media (prefers-reduced-motion: reduce) {
-    body.slide-mode .sheet { animation: none; }
     .backdrop { transition: none; }
-    .zoom-overlay, .zoom-card { transition: none; }
+    .block > header svg.ico,
+    .footer .brand,
+    .footer .brand svg { transition: none; }
   }
 
   @media (max-width: 900px) {
@@ -588,27 +578,64 @@
 <p class="credit">Modelo: Project Model Canvas, de José Finocchio Júnior. Itens em rosa estão pendentes de decisão. Clique no título de uma seção para ampliá-la, ou no título do canvas (rodapé) para o modo slide 16:9.</p>
 </div>
 
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/Flip.min.js"></script>
 <script>
   (function () {
     var body = document.body;
     var toggle = document.getElementById("slideToggle");
     var closeBtn = document.getElementById("slideClose");
+    var sheet = document.getElementById("sheet");
+    var backdrop = document.querySelector(".backdrop");
     var SLIDE_W = 1280;
     var SLIDE_H = 720; /* 16:9 */
 
-    /* Calcula a escala pra caber o slide de 1280x720 na tela, com uma folga de 3% */
+    gsap.registerPlugin(Flip);
+
+    /* Antes o prefers-reduced-motion era resolvido no CSS. Como as animações
+       passaram para o JS, a checagem tem que vir junto — senão a preferência
+       de acessibilidade some sem ninguém perceber. */
+    var semMovimento = window.matchMedia("(prefers-reduced-motion: reduce)");
+    function d(seg) { return semMovimento.matches ? 0 : seg; }
+
+    /* Escala que faz o slide de 1280x720 caber na tela, com folga de 3% */
+    function escalaSlide() {
+      return Math.min(window.innerWidth / SLIDE_W, window.innerHeight / SLIDE_H) * 0.97;
+    }
+
     function fitSlide() {
       if (!body.classList.contains("slide-mode")) return;
-      var scale = Math.min(
-        window.innerWidth / SLIDE_W,
-        window.innerHeight / SLIDE_H
-      ) * 0.97;
-      document.documentElement.style.setProperty("--slide-scale", scale);
+      gsap.set(sheet, { scale: escalaSlide() });
     }
 
     function enterSlide() {
       body.classList.add("slide-mode");
-      fitSlide();
+      var s = escalaSlide();
+
+      gsap.fromTo(backdrop,
+        { opacity: 0 },
+        { opacity: 1, duration: d(0.35), ease: "power2.out" }
+      );
+
+      /* O GSAP é dono do transform inteiro (centralizar + escalar), por isso
+         o CSS não declara transform nenhum em body.slide-mode .sheet. */
+      gsap.fromTo(sheet,
+        { xPercent: -50, yPercent: -46, scale: s * 0.9, opacity: 0 },
+        { xPercent: -50, yPercent: -50, scale: s, opacity: 1, duration: d(0.55), ease: "power3.out" }
+      );
+
+      /* Os 13 blocos entram em cascata. É o ganho que CSS puro só daria
+         escrevendo delay na mão para cada um. */
+      gsap.from(sheet.querySelectorAll(".block"), {
+        opacity: 0,
+        y: 14,
+        duration: d(0.4),
+        ease: "power2.out",
+        stagger: 0.025,
+        delay: d(0.15),
+        clearProps: "opacity,transform"
+      });
+
       /* Fullscreen API: pede ao navegador a tela cheia de verdade (sem barra de endereço).
          Se o navegador bloquear, o modo slide continua funcionando como overlay. */
       var el = document.documentElement;
@@ -617,8 +644,21 @@
       }
     }
 
+    /* O GSAP escreve style inline; sem limpar, o transform do modo slide
+       vazaria para o layout normal e a folha ficaria deslocada. */
+    function limparSlide() {
+      gsap.set(sheet, { clearProps: "all" });
+      gsap.to(backdrop, {
+        opacity: 0,
+        duration: d(0.3),
+        onComplete: function () { gsap.set(backdrop, { clearProps: "opacity" }); }
+      });
+    }
+
     function exitSlide() {
+      if (!body.classList.contains("slide-mode")) return;
       body.classList.remove("slide-mode");
+      limparSlide();
       if (document.fullscreenElement && document.exitFullscreen) {
         document.exitFullscreen().catch(function () {});
       }
@@ -637,7 +677,10 @@
     /* Esc: o navegador sai do fullscreen sozinho; aqui sincronizamos o overlay */
     document.addEventListener("fullscreenchange", function () {
       if (!document.fullscreenElement) {
-        body.classList.remove("slide-mode");
+        if (body.classList.contains("slide-mode")) {
+          body.classList.remove("slide-mode");
+          limparSlide();
+        }
       } else {
         fitSlide();
       }
@@ -678,18 +721,33 @@
       ov.appendChild(card);
       document.body.appendChild(ov);
 
-      /* dois requestAnimationFrame garantem que o navegador pinte o estado
-         inicial antes da transição, senão a animação não roda */
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          ov.classList.add("show");
-        });
-      });
+      if (semMovimento.matches) {
+        gsap.set(ov, { opacity: 1 });
+      } else {
+        gsap.to(ov, { opacity: 1, duration: 0.3, ease: "power2.out" });
 
+        /* Flip: encaixa o card no retângulo exato do bloco clicado, grava esse
+           estado, devolve o card à posição natural e anima de um para o outro.
+           É o que dá a sensação do bloco crescer, em vez de o card surgir
+           no centro sem ligação nenhuma com o que foi clicado. */
+        Flip.fit(card, block, { scale: true });
+        var estado = Flip.getState(card);
+        gsap.set(card, { clearProps: "transform,width,height" });
+        Flip.from(estado, { duration: 0.5, ease: "power3.inOut", scale: true });
+      }
+
+      /* Sem setTimeout com número mágico: quem avisa que a animação acabou
+         é o próprio onComplete, então nunca sai de sincronia com a duração. */
       function close() {
-        ov.classList.remove("show");
         document.removeEventListener("keydown", onKey);
-        setTimeout(function () { ov.remove(); }, 320);
+        if (semMovimento.matches) { ov.remove(); return; }
+        gsap.to(ov, { opacity: 0, duration: 0.35, ease: "power2.in" });
+        Flip.fit(card, block, {
+          scale: true,
+          duration: 0.35,
+          ease: "power3.in",
+          onComplete: function () { ov.remove(); }
+        });
       }
       function onKey(e) {
         if (e.key === "Escape") close();
