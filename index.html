@@ -377,6 +377,48 @@
   }
   .zoom-x:hover { background: var(--pink-bg); color: var(--pink-dark); border-color: var(--pink); }
 
+  /* Detalhe que fica escondido na célula do canvas e só aparece na seção ampliada.
+     O clone recebe a classe .zoom-card no lugar de .block, então a regra vira display:block. */
+  .block .zoom-only { display: none; }
+  .zoom-card .zoom-only { display: block; }
+  .cal {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .cal td {
+    text-align: left;
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: baseline;
+  }
+  .cal .mes td {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 14px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .cal .n { width: 26px; color: var(--muted); }
+  .cal .dia { width: 66px; white-space: nowrap; font-weight: 500; }
+  .cal tr.marco td {
+    background: var(--pink-bg);
+    color: var(--pink-dark);
+    font-weight: 600;
+  }
+  .cal tr.mon td { color: var(--pink-dark); }
+  .nota {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     body.slide-mode .sheet { animation: none; }
     .backdrop { transition: none; }
@@ -558,12 +600,54 @@
     <section class="block b-tempo">
       <header>
         <svg class="ico" viewBox="0 0 24 24"><path d="M18 6H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h13l3-3z"/><path d="M12 3v3"/><path d="M12 12v9"/></svg>
-        <h2>Linha do tempo</h2>
+        <h2>Linha do tempo <small>21 encontros · terças · 4h</small></h2>
       </header>
       <ul>
-        <li>3 marcos ao longo do semestre 2026/2 (E1, E2 e E3)</li>
-        <li class="open">Datas exatas dos marcos: a definir com cliente e orientação</li>
+        <li>15/09 · Milestone 1 — PM Canvas, requisitos e métricas</li>
+        <li>20/10 · Milestone 2 — wireframes, protótipos e site map</li>
+        <li>08/12 · Milestone 3 — modelagem do banco</li>
+        <li>15/12 · Avaliação da Fábrica</li>
       </ul>
+      <p class="sub">Monitorias</p>
+      <ul>
+        <li>08/09, 13/10 e 01/12 — preparação para cada milestone</li>
+      </ul>
+
+      <div class="zoom-only">
+        <p class="sub">Calendário do semestre · 84h</p>
+        <table class="cal">
+          <tbody>
+            <tr class="mes"><td colspan="3">Julho</td></tr>
+            <tr><td class="n">1</td><td class="dia">21/07</td><td>Desenvolvimento do produto · AVA</td></tr>
+            <tr><td class="n">2</td><td class="dia">28/07</td><td>Distribuição dos grupos · oficinas</td></tr>
+            <tr class="mes"><td colspan="3">Agosto</td></tr>
+            <tr><td class="n">3</td><td class="dia">04/08</td><td>Desenvolvimento do produto</td></tr>
+            <tr><td class="n">4</td><td class="dia">11/08</td><td>Desenvolvimento do produto</td></tr>
+            <tr><td class="n">5</td><td class="dia">18/08</td><td>Desenvolvimento do produto</td></tr>
+            <tr><td class="n">6</td><td class="dia">25/08</td><td>Desenvolvimento do produto</td></tr>
+            <tr class="mes"><td colspan="3">Setembro</td></tr>
+            <tr><td class="n">7</td><td class="dia">01/09</td><td>Desenvolvimento do produto</td></tr>
+            <tr class="mon"><td class="n">8</td><td class="dia">08/09</td><td>Monitoria 1 — preparação para o Milestone 1</td></tr>
+            <tr class="marco"><td class="n">9</td><td class="dia">15/09</td><td>Milestone 1 — PM Canvas, requisitos, métricas do processo</td></tr>
+            <tr><td class="n">10</td><td class="dia">22/09</td><td>Desenvolvimento do produto</td></tr>
+            <tr><td class="n">11</td><td class="dia">29/09</td><td>Desenvolvimento do produto</td></tr>
+            <tr class="mes"><td colspan="3">Outubro</td></tr>
+            <tr class="mon"><td class="n">12</td><td class="dia">13/10</td><td>Monitoria 2 — preparação para o Milestone 2</td></tr>
+            <tr class="marco"><td class="n">13</td><td class="dia">20/10</td><td>Milestone 2 — wireframes, protótipos e site map</td></tr>
+            <tr><td class="n">14</td><td class="dia">27/10</td><td>Desenvolvimento do produto</td></tr>
+            <tr class="mes"><td colspan="3">Novembro</td></tr>
+            <tr><td class="n">15</td><td class="dia">03/11</td><td>Desenvolvimento do produto</td></tr>
+            <tr><td class="n">16</td><td class="dia">10/11</td><td>Desenvolvimento do produto</td></tr>
+            <tr><td class="n">17</td><td class="dia">17/11</td><td>Desenvolvimento do produto</td></tr>
+            <tr><td class="n">18</td><td class="dia">24/11</td><td>Desenvolvimento do produto</td></tr>
+            <tr class="mes"><td colspan="3">Dezembro</td></tr>
+            <tr class="mon"><td class="n">19</td><td class="dia">01/12</td><td>Monitoria 3 — preparação para o Milestone 3</td></tr>
+            <tr class="marco"><td class="n">20</td><td class="dia">08/12</td><td>Milestone 3 (final) — modelagem do banco de dados</td></tr>
+            <tr class="marco"><td class="n">21</td><td class="dia">15/12</td><td>Avaliação da Fábrica — encerramento do semestre</td></tr>
+          </tbody>
+        </table>
+        <p class="nota">As entregas de cada milestone estão detalhadas nas Diretrizes Gerais (seções 8 e 9) e nas RFPs de cada projeto. Todo o trabalho é registrado no board do grupo no GitLab.</p>
+      </div>
     </section>
 
     <section class="block b-custos">
