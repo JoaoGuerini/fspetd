@@ -38,25 +38,6 @@
     display: flex;
     flex-direction: column;
   }
-  .topbar {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    border-bottom: 2px solid var(--ink);
-  }
-  .topbar .cell {
-    padding: 10px 16px;
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .topbar .cell + .cell { border-left: 2px solid var(--ink); }
-  .topbar .tag {
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    color: var(--pink-dark);
-  }
-  .topbar .val { font-size: 12.5px; color: var(--ink); }
   .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -418,11 +399,6 @@
 <button class="slide-close" id="slideClose" aria-label="Sair da tela cheia" title="Sair (Esc)">✕</button>
 <div>
 <main class="sheet" id="sheet" aria-label="Project Model Canvas do projeto PetConecta">
-  <div class="topbar">
-    <div class="cell"><span class="tag">GP</span><span class="val">Liz e grupo (papéis a definir)</span></div>
-    <div class="cell"><span class="tag">PITCH</span><span class="val">PetConecta: plataforma que conecta tutores a cuidadores de pets de confiança, perto de casa, em Vilhena.</span></div>
-  </div>
-
   <div class="grid">
     <section class="block b-justificativas">
       <header>
