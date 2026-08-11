@@ -276,8 +276,8 @@
     overflow: auto;
     padding: 30px 36px;
     box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
-    /* Sem transform inicial: o Flip mede a posição natural do card aqui
-       e anima a partir do retângulo do bloco clicado. */
+    /* Sem transform inicial: o GSAP mede a posição natural do card aqui
+       e anima a partir do centro do bloco clicado. */
   }
   .zoom-card header {
     display: flex;
@@ -579,7 +579,6 @@
 </div>
 
 <script src="vendor/gsap.min.js"></script>
-<script src="vendor/Flip.min.js"></script>
 <script>
   (function () {
     var body = document.body;
@@ -589,8 +588,6 @@
     var backdrop = document.querySelector(".backdrop");
     var SLIDE_W = 1280;
     var SLIDE_H = 720; /* 16:9 */
-
-    gsap.registerPlugin(Flip);
 
     /* Antes o prefers-reduced-motion era resolvido no CSS. Como as animações
        passaram para o JS, a checagem tem que vir junto — senão a preferência
@@ -721,19 +718,31 @@
       ov.appendChild(card);
       document.body.appendChild(ov);
 
+      /* De onde o card sai (e para onde volta): o centro do bloco clicado.
+         A escala é UNIFORME de propósito — escalar X e Y por fatores
+         diferentes, que é o que o Flip fazia para casar o retângulo exato do
+         bloco, deformava o texto. Aqui o card só cresce a partir do ponto
+         certo, sem esticar. Recalculado na hora porque a janela pode ter
+         mudado de tamanho entre abrir e fechar. */
+      function origem() {
+        var b = block.getBoundingClientRect();
+        var c = card.getBoundingClientRect();
+        return {
+          x: (b.left + b.width / 2) - (c.left + c.width / 2),
+          y: (b.top + b.height / 2) - (c.top + c.height / 2),
+          scale: Math.max(b.width / c.width, 0.3),
+          opacity: 0
+        };
+      }
+
       if (semMovimento.matches) {
         gsap.set(ov, { opacity: 1 });
       } else {
-        gsap.to(ov, { opacity: 1, duration: 0.3, ease: "power2.out" });
-
-        /* Flip: encaixa o card no retângulo exato do bloco clicado, grava esse
-           estado, devolve o card à posição natural e anima de um para o outro.
-           É o que dá a sensação do bloco crescer, em vez de o card surgir
-           no centro sem ligação nenhuma com o que foi clicado. */
-        Flip.fit(card, block, { scale: true });
-        var estado = Flip.getState(card);
-        gsap.set(card, { clearProps: "transform,width,height" });
-        Flip.from(estado, { duration: 0.5, ease: "power3.inOut", scale: true });
+        gsap.to(ov, { opacity: 1, duration: 0.28, ease: "power2.out" });
+        gsap.from(card, Object.assign(origem(), {
+          duration: 0.5,
+          ease: "power3.out"
+        }));
       }
 
       /* Sem setTimeout com número mágico: quem avisa que a animação acabou
@@ -741,13 +750,12 @@
       function close() {
         document.removeEventListener("keydown", onKey);
         if (semMovimento.matches) { ov.remove(); return; }
-        gsap.to(ov, { opacity: 0, duration: 0.35, ease: "power2.in" });
-        Flip.fit(card, block, {
-          scale: true,
-          duration: 0.35,
-          ease: "power3.in",
+        gsap.to(ov, { opacity: 0, duration: 0.3, ease: "power2.in" });
+        gsap.to(card, Object.assign(origem(), {
+          duration: 0.3,
+          ease: "power2.in",
           onComplete: function () { ov.remove(); }
-        });
+        }));
       }
       function onKey(e) {
         if (e.key === "Escape") close();
