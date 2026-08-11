@@ -18,6 +18,11 @@ Recursos da página:
 
 Itens destacados em rosa são pontos ainda pendentes de decisão.
 
+## Contexto
+
+Decisões já tomadas, pendências, armadilhas do layout e o que ainda falta estão em
+[CONTEXTO.md](CONTEXTO.md). Leia antes de mexer no canvas.
+
 ## Deploy
 
 Publicado na Vercel como site estático a partir da raiz do repositório.
