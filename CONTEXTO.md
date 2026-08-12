@@ -93,16 +93,16 @@ tipográficas (`" "`) no bloco Obj SMART são intencionais.
 - **Linha do tempo:** 21 encontros, terças, 4h. Marcos: **15/09** Milestone 1 (PM Canvas,
   requisitos, métricas) · **20/10** Milestone 2 (wireframes, protótipos, site map) ·
   **08/12** Milestone 3 (modelagem do banco) · **15/12** Avaliação da Fábrica.
-- **Custos:** 25 semanas, média de 6h/semana (150h por pessoa) a ≈R$ 40,67/hora →
-  R$ 6.100,90 por colaborador → R$ 24.403,60 (4 pessoas) + infraestrutura/cursos/IA:
-  R$ 40,00 domínio .com.br/ano (Registro.br) + R$ 1.226,40 Cloudflare Pro/ano
-  (US$ 240,00/ano, câmbio R$ 5,11 de 11/08/2026) + R$ 1.308,00 Alura (plano anual) +
-  R$ 1.022,00 Claude Pro anual (US$ 200,00/ano) → **R$ 28.000,00** no total.
-- **Restrições:** prazo da disciplina, orçamento fixo de R$ 28.000,00 (equipe, cursos e
-  ferramentas de IA), escopo simples. Removida a palavra "infraestrutura" da restrição:
-  o Custos ainda lista domínio + Cloudflare Pro (~R$ 1.266,40), mas isso é incoerente
-  com "não há software rodando" (ver Obj SMART) — ainda não resolvido, sinalizado mas
-  não corrigido no bloco Custos.
+- **Custos:** removida a infraestrutura (domínio, Cloudflare Pro) e o curso Alura — os
+  6 meses do projeto cobrem só elicitação de requisitos e prototipação, sem software
+  rodando, então não fazia sentido pagar hospedagem/CDN. Ficou: 6 meses, média de
+  6h/semana (150h por pessoa) a R$ 20,00/hora → R$ 3.000,00 por colaborador →
+  R$ 12.000,00 (4 pessoas) + Claude Pro por 6 meses (US$ 20,00/mês, câmbio R$ 5,11 de
+  11/08/2026) R$ 613,20 → **R$ 12.613,20** no total. As contas fecham.
+- **Restrições:** prazo da disciplina, orçamento fixo de R$ 12.613,20 (equipe e
+  ferramenta de IA), escopo simples. A inconsistência anterior (Custos com item de
+  infraestrutura contradizendo "não há software rodando" do Obj SMART) foi resolvida
+  removendo a infraestrutura do Custos.
 
 ### Pendências ainda marcadas em rosa
 
