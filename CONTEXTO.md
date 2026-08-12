@@ -84,16 +84,18 @@ tipográficas (`" "`) no bloco Obj SMART são intencionais.
 - **Equipe:** Amara, Erick, João G. e Mariana — todos atuando na elicitação de
   requisitos, modelagem de dados e produção de wireframes.
 - **Cliente / stakeholder:** Matheus.
-- **Obj SMART:** entregar um MVP até **08/12/2026** de um "aplicativo" que permita ao
-  tutor cadastrar pets e solicitar serviços. Uma segunda linha explica que "aplicativo"
-  entre aspas significa a junção das entregas de análise (requisitos, protótipos no
-  Figma, modelagem do banco) — **não há software rodando**; a disciplina entrega
-  análise, não código.
+- **Obj SMART:** entregar até **08/12/2026** um "aplicativo" que permita ao tutor
+  cadastrar pets e solicitar serviços (o termo "MVP" foi removido do texto — a
+  disciplina entrega análise, não um produto mínimo viável rodando). Uma segunda linha
+  explica que "aplicativo" entre aspas significa a junção das entregas de análise
+  (requisitos, protótipos no Figma, modelagem do banco) — **não há software rodando**;
+  a disciplina entrega análise, não código.
 - **Linha do tempo:** 21 encontros, terças, 4h. Marcos: **15/09** Milestone 1 (PM Canvas,
   requisitos, métricas) · **20/10** Milestone 2 (wireframes, protótipos, site map) ·
   **08/12** Milestone 3 (modelagem do banco) · **15/12** Avaliação da Fábrica.
-- **Custos:** 26 semanas, R$ 800,00/semana por membro → R$ 20.800,00 por colaborador →
-  **R$ 83.200,00** no total (4 pessoas). As contas fecham.
+- **Custos:** 25 semanas, R$ 406,60/semana por membro → R$ 10.165,00 por colaborador →
+  R$ 40.660,00 (4 pessoas) + R$ 40,00 de infraestrutura (domínio .com.br/ano, preço de
+  mercado do Registro.br) → **R$ 40.700,00** no total. As contas fecham.
 - **Restrições:** prazo da disciplina, ferramentas gratuitas.
 
 ### Pendências ainda marcadas em rosa
